@@ -1,0 +1,6 @@
+.env
+.env.example
+matterbridge.toml
+./synapse-data/homeserver.yaml
+./snyapse-data/matrix-dev.signing.key
+Dockerfile

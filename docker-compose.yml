@@ -1,0 +1,33 @@
+---
+services:
+  synapse:
+    image: matrixdotorg/synapse:latest
+    container_name: synapse
+    restart: unless-stopped
+    volumes:
+      - ./synapse-data:/data
+    ports:
+      - "8008:8008"
+    environment:
+      - SYNAPSE_SERVER_NAME=matrix-dev
+      - SYNAPSE_REPORT_STATS=yes
+
+  element-web:
+    image: vectorim/element-web:latest
+    container_name: element-web
+    ports:
+      - "8080:80"
+    volumes:
+      - ./element-config.json:/app/config.json
+    depends_on:
+      - synapse
+    restart: unless-stopped
+
+  matterbridge:
+    image: 42wim/matterbridge:1.25.2
+    container_name: matterbridge
+    restart: unless-stopped
+    volumes:
+      - ./matterbridge.toml:/etc/matterbridge/matterbridge.toml
+    env_file:
+      - .env
