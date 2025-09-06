@@ -11,6 +11,11 @@ services:
     environment:
       - SYNAPSE_SERVER_NAME=matrix-dev
       - SYNAPSE_REPORT_STATS=yes
+    healthcheck:
+      test: ["CMD","curl","-i","http://localhost:8008/_matrix/client/versions"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
 
   element-web:
     image: vectorim/element-web:latest
@@ -24,10 +29,13 @@ services:
     restart: unless-stopped
 
   matterbridge:
-    image: 42wim/matterbridge:1.25.2
+    image: 42wim/matterbridge:latest
     container_name: matterbridge
-    restart: unless-stopped
     volumes:
       - ./matterbridge.toml:/etc/matterbridge/matterbridge.toml
     env_file:
       - .env
+    depends_on:
+      synapse:
+        condition: service_healthy
+    restart: unless-stopped

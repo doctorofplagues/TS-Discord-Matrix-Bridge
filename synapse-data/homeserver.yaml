@@ -35,16 +35,21 @@ signing_key_path: "/data/matrix-dev.signing.key"
 trusted_key_servers:
   - server_name: "matrix.org"
 
-# Rate limiting for login requests
 rc_login:
   address:
-    per_second: 5
-    burst_count: 50
+    per_second: 0.3
+    burst_count: 3
   account:
-    per_second: 5
-    burst_count: 50
+    per_second: 0.2
+    burst_count: 5
   failed_attempts:
-    per_second: 5
-    burst_count: 50
+    per_second: 0.17
+    burst_count: 3
+  account_failed_attempts:
+    per_second: 0.05
+    burst_count: 3
+rc_message:
+  per_second: 1
+  burst_count: 10
 
 # vim:ft=yaml
