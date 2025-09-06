@@ -1,0 +1,31 @@
+[general]
+Debug = true
+
+[matrix]
+  [matrix.general]
+  Homeserver = "http://synapse:8008"
+  Server = "http://synapse:8008"
+  Login = "..."
+  Password = "..."
+  RemoteNickFormat = "[mx] <{NICK}>"
+  SkipJoin = false
+
+[discord]
+  [discord.general]
+  Token = "..."
+  Server = "..."
+  UseChannelID = true
+  RemoteNickFormat = "[dc] <{NICK}>"
+  NoTLS = true
+
+[[gateway]]
+name = "matrix-discord"
+enable = true
+
+  [[gateway.inout]]
+  account = "matrix.general"
+  channel = "..."
+
+  [[gateway.inout]]
+  account = "discord.general"
+  channel = "..."
